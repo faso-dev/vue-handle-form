@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>VUE-HANDLE-FORM</title>
+</head>
+<body>
+<form action="" method="post">
+    <div class="container mt-5">
+        <div id="app">
+            <div class="form-group">
+                <input v-model="name" v-on:keyup="handleForm" type="text" name="" id="" class="form-control" v-bind:class="hasError ? 'is-invalid' : ''">
+                <div class="invalid-feedback">
+                    Le formulaire ne peut être vide
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="module">
+    import handle from "./src/helpers/handle.js";
+    var app = new Vue({
+        el: '#app',
+        data: {
+            name: '',
+            hasError : false
+        },
+        methods: {
+            handleForm(){
+                this.hasError = handle(this.name)
+            }
+        }
+    })
+</script>
+</body>
+</html>
