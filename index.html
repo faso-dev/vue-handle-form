@@ -11,9 +11,15 @@
     <div class="container mt-5">
         <div id="app">
             <div class="form-group">
-                <input v-model="name" v-on:keyup="handleForm" type="text" name="" id="" class="form-control" v-bind:class="hasError ? 'is-invalid' : ''">
+                <input v-model="formData.name" v-on:keyup="handleForm" type="text" name="" id="" class="form-control" v-bind:class="formErrors.nameError ? 'is-invalid' : 'is-valid'">
                 <div class="invalid-feedback">
-                    Le formulaire ne peut être vide
+                    Le nom ne peut être vide
+                </div>
+            </div>
+            <div class="form-group">
+                <input v-model="formData.mail" v-on:keyup="handleForm" type="text" name="" id="" class="form-control" v-bind:class="formErrors.mailError ? 'is-invalid' : 'is-valid'">
+                <div class="invalid-feedback">
+                    L'adresse mail n'est pas valide
                 </div>
             </div>
         </div>
@@ -22,16 +28,24 @@
 </form>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="module">
-    import handle from "./src/helpers/handle.js";
+    import validator from "./src/helpers/Validator.js";
     var app = new Vue({
         el: '#app',
         data: {
             name: '',
-            hasError : false
+            formData: {
+                name : '',
+                mail: ''
+            },
+            formErrors : {
+                nameError: true,
+                mailError: true
+            }
         },
         methods: {
             handleForm(){
-                this.hasError = handle(this.name)
+                this.formErrors.nameError = validator.empty(this.formData.name)
+                this.formErrors.mailError = !validator.validateEmail(this.formData.mail)
             }
         }
     })
